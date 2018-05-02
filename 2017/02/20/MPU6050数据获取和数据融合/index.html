@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="YunShuiXin's Blog" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="MPU6050是一款运动和姿态传感器芯片，可以获取物体当前的三个加速度分量和三个旋转角速度。由于其体积小巧，功能强大，并且价格低，在平衡车和航模制作中应用广泛。 基于Python的数据获取和互补滤波MPU6050数据获取MPU6050使用i2c通讯，其数据获取已有大佬使用Python完成，见[Github mpu6050]，我们需要使用的是这里的mpu6050.py文件。 MPU6050数据互补滤">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运动姿态传感器MPU6050数据获取和数据融合">
+<meta property="og:url" content="http://yunshuixin.cn/2017/02/20/MPU6050数据获取和数据融合/index.html">
+<meta property="og:site_name" content="云水心的个人站">
+<meta property="og:description" content="MPU6050是一款运动和姿态传感器芯片，可以获取物体当前的三个加速度分量和三个旋转角速度。由于其体积小巧，功能强大，并且价格低，在平衡车和航模制作中应用广泛。 基于Python的数据获取和互补滤波MPU6050数据获取MPU6050使用i2c通讯，其数据获取已有大佬使用Python完成，见[Github mpu6050]，我们需要使用的是这里的mpu6050.py文件。 MPU6050数据互补滤">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yunshuixin.cn/images/运动姿态传感器MPU6050数据获取和数据融合/mpu6050_filter_plot.png">
+<meta property="og:updated_time" content="2018-04-04T11:06:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="运动姿态传感器MPU6050数据获取和数据融合">
+<meta name="twitter:description" content="MPU6050是一款运动和姿态传感器芯片，可以获取物体当前的三个加速度分量和三个旋转角速度。由于其体积小巧，功能强大，并且价格低，在平衡车和航模制作中应用广泛。 基于Python的数据获取和互补滤波MPU6050数据获取MPU6050使用i2c通讯，其数据获取已有大佬使用Python完成，见[Github mpu6050]，我们需要使用的是这里的mpu6050.py文件。 MPU6050数据互补滤">
+<meta name="twitter:image" content="http://yunshuixin.cn/images/运动姿态传感器MPU6050数据获取和数据融合/mpu6050_filter_plot.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yunshuixin.cn/2017/02/20/MPU6050数据获取和数据融合/"/>
+
+
+
+
+
+  <title>运动姿态传感器MPU6050数据获取和数据融合 | 云水心的个人站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云水心的个人站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">尘世人，云水心</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-notes">
+          <a href="/categories/Notes" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-pencil"></i> <br />
+            
+            Notes
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/categories/Life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-camera-retro"></i> <br />
+            
+            Life
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-diy">
+          <a href="/categories/DIY" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-laptop"></i> <br />
+            
+            DIY
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/awesome_links" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-globe"></i> <br />
+            
+            Links
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yunshuixin.cn/2017/02/20/MPU6050数据获取和数据融合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="云水心">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/My_avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云水心的个人站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">运动姿态传感器MPU6050数据获取和数据融合</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T00:00:00+08:00">
+                2017-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DIY/" itemprop="url" rel="index">
+                    <span itemprop="name">DIY</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,331
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>MPU6050是一款运动和姿态传感器芯片，可以获取物体当前的三个加速度分量和三个旋转角速度。由于其体积小巧，功能强大，并且价格低，在平衡车和航模制作中应用广泛。</p>
+<h1 id="基于Python的数据获取和互补滤波"><a href="#基于Python的数据获取和互补滤波" class="headerlink" title="基于Python的数据获取和互补滤波"></a>基于Python的数据获取和互补滤波</h1><h2 id="MPU6050数据获取"><a href="#MPU6050数据获取" class="headerlink" title="MPU6050数据获取"></a>MPU6050数据获取</h2><p>MPU6050使用i2c通讯，其数据获取已有大佬使用Python完成，见[Github mpu6050]，我们需要使用的是这里的mpu6050.py文件。</p>
+<h2 id="MPU6050数据互补滤波"><a href="#MPU6050数据互补滤波" class="headerlink" title="MPU6050数据互补滤波"></a>MPU6050数据互补滤波</h2><p>通过MPU6050得到姿态角有两个途径：</p>
+<ol>
+<li>通过加速度计可以得到加速度方向，进而求解Pitch(俯仰)和Roll(滚转)角度</li>
+<li>通过陀螺仪得到角速度，角速度对时间的积分得到姿态角<br>但这两种方式如果单独使用效果并不好，直接从加速度计得到的角度值包含大量噪声，抖动明显；直接由角速度积分得到的角度值虽然平滑，但陀螺仪的偏差会导致积分误差不断增大。通过将加速度计和陀螺仪分别得到的角度进行融合，可以得到质量较好的角度数据。常用的融合方式有卡尔曼滤波、互补滤波等，卡尔曼滤波高深难懂，互补滤波更容易理解，且效果也不差。<br>互补滤波代码：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Complimentary_Filter</span>:</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, order1_ratio=<span class="number">0.75</span>, order2_ratio=<span class="number">0.2</span>)</span>:</span></span><br><span class="line">self.order1_ratio = order1_ratio</span><br><span class="line">self.order2_ratio = order2_ratio</span><br><span class="line">self.order1_pitch = <span class="number">0.0</span> <span class="comment"># angle around X axis</span></span><br><span class="line">self.order1_roll = <span class="number">0.0</span> <span class="comment"># angle around Y axis</span></span><br><span class="line">self.order2_pitch = <span class="number">0.0</span> <span class="comment"># angle around X axis</span></span><br><span class="line">self.order2_roll = <span class="number">0.0</span> <span class="comment"># angle around Y axis</span></span><br><span class="line">self.y_pitch=<span class="number">0.0</span></span><br><span class="line">self.y_roll=<span class="number">0.0</span></span><br><span class="line"><span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">combine_order1</span><span class="params">(self, dt, accel_data, gyro_data)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Turning around the X axis results in a vector on the Y-axis</span></span><br><span class="line">pitch_accel = math.atan2(accel_data[<span class="number">1</span>], accel_data[<span class="number">2</span>]) * <span class="number">180</span> / math.pi</span><br><span class="line"><span class="comment"># Turning around the Y axis results in a vector on the X-axis</span></span><br><span class="line">roll_accel = math.atan2(accel_data[<span class="number">0</span>], accel_data[<span class="number">2</span>]) * <span class="number">180</span> / math.pi</span><br><span class="line"></span><br><span class="line">self.order1_pitch = (self.order1_pitch- gyro_data[<span class="number">2</span>] * dt) * self.order1_ratio + pitch_accel * (<span class="number">1.0</span> - self.order1_ratio)</span><br><span class="line">self.order1_roll = (self.order1_roll- gyro_data[<span class="number">1</span>] * dt)* self.order1_ratio + roll_accel * (<span class="number">1.0</span> - self.order1_ratio)</span><br><span class="line"><span class="keyword">return</span> [pitch_accel, roll_accel, self.order1_pitch, self.order1_roll]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">combine_order2</span><span class="params">(self, dt, accel_data, gyro_data)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Turning around the X axis results in a vector on the Y-axis</span></span><br><span class="line">pitch_accel = math.atan2(accel_data[<span class="number">1</span>], accel_data[<span class="number">2</span>]) * <span class="number">180</span> / math.pi</span><br><span class="line"><span class="comment"># Turning around the Y axis results in a vector on the X-axis</span></span><br><span class="line">roll_accel = math.atan2(accel_data[<span class="number">0</span>], accel_data[<span class="number">2</span>]) * <span class="number">180</span> / math.pi</span><br><span class="line"></span><br><span class="line">x1=(pitch_accel-self.order2_pitch)*(<span class="number">1.0</span>-self.order2_ratio)*(<span class="number">1.0</span>-self.order2_ratio)</span><br><span class="line">self.y_pitch = self.y_pitch + x1*dt</span><br><span class="line">x2 = self.y_pitch + <span class="number">2</span> * (<span class="number">1.0</span>-self.order2_ratio) * (pitch_accel - self.order2_pitch) + gyro_data[<span class="number">2</span>]</span><br><span class="line">self.order2_pitch = self.order2_pitch + x2*dt</span><br><span class="line"></span><br><span class="line">x1=(roll_accel-self.order2_roll)*(<span class="number">1.0</span>-self.order2_ratio)*(<span class="number">1.0</span>-self.order2_ratio)</span><br><span class="line">self.y_roll = self.y_roll + x1*dt</span><br><span class="line">x2 = self.y_roll + <span class="number">2</span> * (<span class="number">1.0</span>-self.order2_ratio) * (roll_accel - self.order2_roll) + gyro_data[<span class="number">1</span>]</span><br><span class="line">self.order2_roll = self.order2_roll + x2*dt</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [pitch_accel, roll_accel, self.order2_pitch, self.order2_roll]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="树莓派获取MPU6050数据，融合滤波后绘图显示"><a href="#树莓派获取MPU6050数据，融合滤波后绘图显示" class="headerlink" title="树莓派获取MPU6050数据，融合滤波后绘图显示"></a>树莓派获取MPU6050数据，融合滤波后绘图显示</h2><p>采用树莓派3 B+，与MPU6050 I2C接口连接<br>代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyqtgraph.Qt <span class="keyword">import</span> QtGui, QtCore</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line"><span class="keyword">from</span> filter <span class="keyword">import</span> Complimentary_Filter <span class="keyword">as</span> Filter</span><br><span class="line"><span class="keyword">import</span> pyqtgraph <span class="keyword">as</span> pg</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> mpu6050 <span class="keyword">import</span> mpu6050</span><br><span class="line"></span><br><span class="line">filter = Filter()</span><br><span class="line">delta_T = <span class="number">50</span></span><br><span class="line">pen_width = <span class="number">2</span></span><br><span class="line">rad2deg = <span class="number">180.0</span>/math.pi</span><br><span class="line">framenum = <span class="number">200</span></span><br><span class="line">x_label = range(<span class="number">0</span>,framenum)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(framenum):</span><br><span class="line">x_label[i] *= delta_T</span><br><span class="line">acce_pitch_deque = deque(maxlen=framenum)</span><br><span class="line">acce_roll_deque = deque(maxlen=framenum)</span><br><span class="line">order1_filter_pitch_deque = deque(maxlen=framenum)</span><br><span class="line">order1_filter_roll_deque = deque(maxlen=framenum)</span><br><span class="line">order2_filter_pitch_deque = deque(maxlen=framenum)</span><br><span class="line">order2_filter_roll_deque = deque(maxlen=framenum)</span><br><span class="line"></span><br><span class="line">sensor = mpu6050(<span class="number">0x68</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(framenum):</span><br><span class="line">acce_pitch_deque.append(<span class="number">0.0</span>)</span><br><span class="line">acce_roll_deque.append(<span class="number">0.0</span>)</span><br><span class="line">order1_filter_pitch_deque.append(<span class="number">0.0</span>)</span><br><span class="line">order1_filter_roll_deque.append(<span class="number">0.0</span>)</span><br><span class="line">order2_filter_pitch_deque.append(<span class="number">0.0</span>)</span><br><span class="line">order2_filter_roll_deque.append(<span class="number">0.0</span>)</span><br><span class="line"></span><br><span class="line">win = pg.GraphicsWindow(title = <span class="string">"MPU6050 Plotter"</span>)</span><br><span class="line">win.resize(<span class="number">1200</span>,<span class="number">600</span>)</span><br><span class="line">win.setWindowTitle(<span class="string">'MPU6050 Pitch and Roll Plotter'</span>)</span><br><span class="line">pg.setConfigOptions(antialias = <span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">addplot</span><span class="params">(title_name,left_name,unit_name,bottom_name,Y_range_min,Y_range_max)</span>:</span></span><br><span class="line">subplot= win.addPlot(title = title_name)</span><br><span class="line">subplot.showGrid(x = <span class="keyword">True</span>,y = <span class="keyword">True</span>)</span><br><span class="line">subplot.setLabel(<span class="string">'left'</span>, left_name, units = unit_name)</span><br><span class="line">subplot.setLabel(<span class="string">'bottom'</span>, bottom_name)</span><br><span class="line">subplot.setYRange(Y_range_min,Y_range_max)</span><br><span class="line"><span class="keyword">return</span> subplot</span><br><span class="line"></span><br><span class="line">acce_pitch_plotter = addplot(<span class="string">'Acce_Pitch_Plotter'</span>,<span class="string">'Pitch'</span>,<span class="string">'deg'</span>,<span class="string">'time/ms'</span>,<span class="number">-180</span>,<span class="number">180</span>)</span><br><span class="line">curve_acce_pitch = acce_pitch_plotter.plot(pen = pg.mkPen(color = (<span class="number">255</span>,<span class="number">0</span>,<span class="number">255</span>),width = pen_width))</span><br><span class="line">acce_roll_plotter = addplot(<span class="string">'Acce_Roll_Plotter'</span>,<span class="string">'Roll'</span>,<span class="string">'deg'</span>,<span class="string">'time/ms'</span>,<span class="number">-180</span>,<span class="number">180</span>)</span><br><span class="line">curve_acce_roll = acce_roll_plotter.plot(pen = pg.mkPen(color = (<span class="number">0</span>, <span class="number">255</span>, <span class="number">127</span>),width = pen_width))</span><br><span class="line"></span><br><span class="line">win.nextRow()</span><br><span class="line"></span><br><span class="line">order1_filter_pitch_plotter = addplot(<span class="string">'1st-order-filter_Pitch_Plotter'</span>,<span class="string">'Pitch'</span>,<span class="string">'deg'</span>,<span class="string">'time/ms'</span>,<span class="number">-180</span>,<span class="number">180</span>)</span><br><span class="line">curve_order1_filter_pitch = order1_filter_pitch_plotter.plot(pen = pg.mkPen(color = (<span class="number">255</span>,<span class="number">0</span>,<span class="number">255</span>),width = pen_width))</span><br><span class="line">order1_filter_roll_plotter = addplot(<span class="string">'1st-order-filter_Roll_Plotter'</span>,<span class="string">'Roll'</span>,<span class="string">'deg'</span>,<span class="string">'time/ms'</span>,<span class="number">-180</span>,<span class="number">180</span>)</span><br><span class="line">curve_order1_filter_roll = order1_filter_roll_plotter.plot(pen = pg.mkPen(color = (<span class="number">0</span>, <span class="number">255</span>, <span class="number">127</span>),width = pen_width))</span><br><span class="line"></span><br><span class="line">win.nextRow()</span><br><span class="line"></span><br><span class="line">order2_filter_pitch_plotter = addplot(<span class="string">'2nd-order-filter_Pitch_Plotter'</span>,<span class="string">'Pitch'</span>,<span class="string">'deg'</span>,<span class="string">'time/ms'</span>,<span class="number">-180</span>,<span class="number">180</span>)</span><br><span class="line">curve_order2_filter_pitch = order2_filter_pitch_plotter.plot(pen = pg.mkPen(color = (<span class="number">255</span>,<span class="number">0</span>,<span class="number">255</span>),width = pen_width))</span><br><span class="line">order2_filter_roll_plotter = addplot(<span class="string">'2nd-order-filter_Roll_Plotter'</span>,<span class="string">'Roll'</span>,<span class="string">'deg'</span>,<span class="string">'time/ms'</span>,<span class="number">-180</span>,<span class="number">180</span>)</span><br><span class="line">curve_order2_filter_roll = order2_filter_roll_plotter.plot(pen = pg.mkPen(color = (<span class="number">0</span>, <span class="number">255</span>, <span class="number">127</span>),width = pen_width))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">()</span>:</span></span><br><span class="line">time1 = datetime.datetime.now()</span><br><span class="line">acce_data = [sensor.get_accel_data().get(<span class="string">'x'</span>),sensor.get_accel_data().get(<span class="string">'y'</span>),sensor.get_accel_data().get(<span class="string">'z'</span>)]</span><br><span class="line">gyro_data = [sensor.get_gyro_data().get(<span class="string">'x'</span>),sensor.get_gyro_data().get(<span class="string">'y'</span>),sensor.get_gyro_data().get(<span class="string">'z'</span>)]</span><br><span class="line"></span><br><span class="line">order1_filter_pitch_roll_data = filter.combine_order1(delta_T/<span class="number">1000.0</span>, acce_data, gyro_data)</span><br><span class="line">order2_filter_pitch_roll_data = filter.combine_order2(delta_T/<span class="number">1000.0</span>, acce_data, gyro_data)</span><br><span class="line"></span><br><span class="line">acce_pitch_deque.append(order1_filter_pitch_roll_data[<span class="number">0</span>])</span><br><span class="line">acce_roll_deque.append(order1_filter_pitch_roll_data[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">order1_filter_pitch_deque.append(order1_filter_pitch_roll_data[<span class="number">2</span>])</span><br><span class="line">order1_filter_roll_deque.append(order1_filter_pitch_roll_data[<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">order2_filter_pitch_deque.append(order2_filter_pitch_roll_data[<span class="number">2</span>])</span><br><span class="line">order2_filter_roll_deque.append(order2_filter_pitch_roll_data[<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">curve_acce_pitch.setData(x_label, list(acce_pitch_deque))</span><br><span class="line">curve_acce_roll.setData(x_label, list(acce_roll_deque))</span><br><span class="line"></span><br><span class="line">curve_order1_filter_pitch.setData(x_label, list(order1_filter_pitch_deque))</span><br><span class="line">curve_order1_filter_roll.setData(x_label, list(order1_filter_roll_deque))</span><br><span class="line"></span><br><span class="line">curve_order2_filter_pitch.setData(x_label, list(order2_filter_pitch_deque))</span><br><span class="line">curve_order2_filter_roll.setData(x_label, list(order2_filter_roll_deque))</span><br><span class="line"></span><br><span class="line">delta_time=datetime.datetime.now()-time1</span><br><span class="line"><span class="comment">#print delta_time.microseconds/1000.0</span></span><br><span class="line"></span><br><span class="line">timer = QtCore.QTimer()</span><br><span class="line">timer.timeout.connect(update)</span><br><span class="line">timer.start(delta_T) <span class="comment">#take a sample every * ms</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">if</span> (sys.flags.interactive != <span class="number">1</span>) <span class="keyword">or</span> <span class="keyword">not</span> hasattr(QtCore, <span class="string">'PYQT_VERSION'</span>):</span><br><span class="line">QtGui.QApplication.instance().exec_()</span><br></pre></td></tr></table></figure></p>
+<h2 id="绘图结果"><a href="#绘图结果" class="headerlink" title="绘图结果"></a>绘图结果</h2><p>第一、二、三行分别表示加速度计数据直接求解得到的Pitch、Yaw角度，一阶互补滤波的角度，二阶互补滤波的角度。<br><img src="/images/运动姿态传感器MPU6050数据获取和数据融合/mpu6050_filter_plot.png" alt=""></p>
+<h2 id="其它资料"><a href="#其它资料" class="headerlink" title="其它资料"></a>其它资料</h2><p><a href="https://zhuanlan.zhihu.com/p/20082486?columnSlug=devymex" target="_blank" rel="noopener">Arduino教程：MPU6050的数据获取、分析与处理</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/17/基于LeapMotion和S曲线的飞行机器人及机械臂系统/" rel="next" title="基于LeapMotion和S曲线的飞行机器人及机械臂系统">
+                <i class="fa fa-chevron-left"></i> 基于LeapMotion和S曲线的飞行机器人及机械臂系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/26/印象金陵——玄武古鸡/" rel="prev" title="印象金陵——玄武古鸡">
+                印象金陵——玄武古鸡 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/My_avatar.png"
+                alt="云水心" />
+            
+              <p class="site-author-name" itemprop="name">云水心</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ShuiXinYun" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于Python的数据获取和互补滤波"><span class="nav-number">1.</span> <span class="nav-text">基于Python的数据获取和互补滤波</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MPU6050数据获取"><span class="nav-number">1.1.</span> <span class="nav-text">MPU6050数据获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPU6050数据互补滤波"><span class="nav-number">1.2.</span> <span class="nav-text">MPU6050数据互补滤波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#树莓派获取MPU6050数据，融合滤波后绘图显示"><span class="nav-number">1.3.</span> <span class="nav-text">树莓派获取MPU6050数据，融合滤波后绘图显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘图结果"><span class="nav-number">1.4.</span> <span class="nav-text">绘图结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它资料"><span class="nav-number">1.5.</span> <span class="nav-text">其它资料</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">云水心</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">6.8k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">苏ICP备17046110号</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

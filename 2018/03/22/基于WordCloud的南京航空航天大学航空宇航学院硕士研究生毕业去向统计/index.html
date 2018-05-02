@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="YunShuiXin's Blog" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Dependecy: word_cloud:   pip install wordcloud  jieba:   pip install jieba   统计结果 图片字体大小对应所占比重大小   样本为300位2018届毕业的硕士研究生，统计数据基于学院发布的报到证信息   我院2018届待毕业研究生结构为：280位博士研究生（不同年份入学，18年毕业），355位硕士研究生(基本为同一年份入学)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计">
+<meta property="og:url" content="http://yunshuixin.cn/2018/03/22/基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计/index.html">
+<meta property="og:site_name" content="云水心的个人站">
+<meta property="og:description" content="Dependecy: word_cloud:   pip install wordcloud  jieba:   pip install jieba   统计结果 图片字体大小对应所占比重大小   样本为300位2018届毕业的硕士研究生，统计数据基于学院发布的报到证信息   我院2018届待毕业研究生结构为：280位博士研究生（不同年份入学，18年毕业），355位硕士研究生(基本为同一年份入学)">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yunshuixin.cn/images/基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计/Institution.png">
+<meta property="og:image" content="http://yunshuixin.cn/images/基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计/Location.png">
+<meta property="og:updated_time" content="2018-05-02T14:57:35.834Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计">
+<meta name="twitter:description" content="Dependecy: word_cloud:   pip install wordcloud  jieba:   pip install jieba   统计结果 图片字体大小对应所占比重大小   样本为300位2018届毕业的硕士研究生，统计数据基于学院发布的报到证信息   我院2018届待毕业研究生结构为：280位博士研究生（不同年份入学，18年毕业），355位硕士研究生(基本为同一年份入学)">
+<meta name="twitter:image" content="http://yunshuixin.cn/images/基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计/Institution.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yunshuixin.cn/2018/03/22/基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计/"/>
+
+
+
+
+
+  <title>基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计 | 云水心的个人站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">云水心的个人站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">尘世人，云水心</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-notes">
+          <a href="/categories/Notes" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-pencil"></i> <br />
+            
+            Notes
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/categories/Life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-camera-retro"></i> <br />
+            
+            Life
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-diy">
+          <a href="/categories/DIY" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-laptop"></i> <br />
+            
+            DIY
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-links">
+          <a href="/awesome_links" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-globe"></i> <br />
+            
+            Links
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yunshuixin.cn/2018/03/22/基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="云水心">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/My_avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="云水心的个人站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-22T09:41:38+08:00">
+                2018-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Notes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  599
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Dependecy"><a href="#Dependecy" class="headerlink" title="Dependecy:"></a>Dependecy:</h1><ul>
+<li><p>word_cloud:</p>
+<p>  <code>pip install wordcloud</code></p>
+</li>
+<li><p>jieba:</p>
+<p>  <code>pip install jieba</code></p>
+</li>
+</ul>
+<h1 id="统计结果"><a href="#统计结果" class="headerlink" title="统计结果"></a>统计结果</h1><blockquote>
+<p>图片字体大小对应所占比重大小</p>
+</blockquote>
+<blockquote>
+<p>样本为300位2018届毕业的硕士研究生，统计数据基于学院发布的报到证信息</p>
+</blockquote>
+<blockquote>
+<p>我院2018届待毕业研究生结构为：280位博士研究生（不同年份入学，18年毕业），355位硕士研究生(基本为同一年份入学)，其余55位同学去向未定</p>
+</blockquote>
+<blockquote>
+<p>统计的硕士研究生包含硕士中毕业后转博的同学，统计中不计及280位博士研究生</p>
+</blockquote>
+<h2 id="个人观点总结"><a href="#个人观点总结" class="headerlink" title="个人观点总结"></a>个人观点总结</h2><ul>
+<li>毕业后主要去向（按多少排序）：<ul>
+<li>升学</li>
+<li>航空工业</li>
+<li>中船重工&amp;中船工业</li>
+<li>机电</li>
+<li>能源（远景、金风）</li>
+<li>航天</li>
+<li>CS</li>
+<li>中电</li>
+<li>算上直升机所，去四大主机所的同学相对很少</li>
+<li>没有去BAT的，甚至没有去华为的。少量去中兴的，IT和CS行业招人门槛在提高</li>
+<li>工作多为制造业，少量CS，还有几个有想法的去做房地产</li>
+<li>地域上，去向以江浙沪为主; 帝都对南航毕业生的吸引力远不及魔都（对应航天和航空）.</li>
+</ul>
+</li>
+</ul>
+<h2 id="去向单位"><a href="#去向单位" class="headerlink" title="去向单位"></a>去向单位</h2><p><img src="/images/基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计/Institution.png" alt=""></p>
+<h2 id="去向地域"><a href="#去向地域" class="headerlink" title="去向地域"></a>去向地域</h2><p><img src="/images/基于WordCloud的南京航空航天大学航空宇航学院硕士研究生毕业去向统计/Location.png" alt=""></p>
+<h1 id="Python代码"><a href="#Python代码" class="headerlink" title="Python代码"></a>Python代码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment">#wordcloud生成中文词云</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> wordcloud <span class="keyword">import</span> WordCloud, ImageColorGenerator</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="comment">#import jieba.analyse as analyse</span></span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> path</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image, ImageDraw, ImageFont</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制词云</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw_wordcloud</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment">#读入一个txt文件</span></span><br><span class="line">    comment_text = open(<span class="string">'Institution.txt'</span>,<span class="string">'r'</span>).read()</span><br><span class="line">    <span class="comment">#结巴分词，生成字符串，如果不通过分词，无法直接生成正确的中文词云</span></span><br><span class="line">    jieba.load_userdict(<span class="string">'Institution.txt'</span>)	</span><br><span class="line">    cut_text = <span class="string">" "</span>.join(jieba.cut(comment_text))</span><br><span class="line">    d = path.dirname(__file__) <span class="comment"># 当前文件文件夹所在目录</span></span><br><span class="line">    color_mask = imread(<span class="string">"Cloud.png"</span>) <span class="comment"># 读取背景图片</span></span><br><span class="line">    cloud = WordCloud(</span><br><span class="line">        <span class="comment">#设置字体，不指定就会出现乱码</span></span><br><span class="line">        font_path=<span class="string">"SIMHEI.TTF"</span>,</span><br><span class="line">        <span class="comment">#font_path=path.join(d,'simsun.ttc'),</span></span><br><span class="line">        <span class="comment">#设置背景色</span></span><br><span class="line">        background_color=<span class="string">'white'</span>,</span><br><span class="line">        <span class="comment">#词云形状</span></span><br><span class="line">        mask=color_mask,</span><br><span class="line">        <span class="comment">#允许最大词汇</span></span><br><span class="line">        max_words=<span class="number">2000</span>,</span><br><span class="line">        <span class="comment">#最大号字体</span></span><br><span class="line">        max_font_size=<span class="number">200</span>,</span><br><span class="line">	min_font_size=<span class="number">35</span>,</span><br><span class="line">        width=<span class="number">1920</span>,</span><br><span class="line">        height=<span class="number">1080</span>,</span><br><span class="line">	prefer_horizontal=<span class="number">0.96</span>,</span><br><span class="line">        margin=<span class="number">0</span></span><br><span class="line">    )</span><br><span class="line">    word_cloud = cloud.generate(cut_text) <span class="comment"># 产生词云</span></span><br><span class="line">    image_colors = ImageColorGenerator(color_mask)</span><br><span class="line">    word_cloud.to_file(<span class="string">"Institution.png"</span>) <span class="comment">#保存图片</span></span><br><span class="line">    <span class="comment">#  显示词云图片</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#plt.imshow(word_cloud,interpolation="bilinear")</span></span><br><span class="line">    <span class="comment">#plt.imshow(word_cloud.recolor(color_func=image_colors))</span></span><br><span class="line">    <span class="comment">#plt.axis('off')</span></span><br><span class="line">    <span class="comment">#plt.show()</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    draw_wordcloud()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/06/印象金陵——紫金雪景/" rel="next" title="印象金陵——紫金雪景">
+                <i class="fa fa-chevron-left"></i> 印象金陵——紫金雪景
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/04/Hexo-Github博客迁移/" rel="prev" title="Hexo+Github博客迁移">
+                Hexo+Github博客迁移 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/My_avatar.png"
+                alt="云水心" />
+            
+              <p class="site-author-name" itemprop="name">云水心</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ShuiXinYun" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Dependecy"><span class="nav-number">1.</span> <span class="nav-text">Dependecy:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#统计结果"><span class="nav-number">2.</span> <span class="nav-text">统计结果</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#个人观点总结"><span class="nav-number">2.1.</span> <span class="nav-text">个人观点总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去向单位"><span class="nav-number">2.2.</span> <span class="nav-text">去向单位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去向地域"><span class="nav-number">2.3.</span> <span class="nav-text">去向地域</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python代码"><span class="nav-number">3.</span> <span class="nav-text">Python代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">云水心</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">6.8k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+  <div class="footer-custom">苏ICP备17046110号</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
